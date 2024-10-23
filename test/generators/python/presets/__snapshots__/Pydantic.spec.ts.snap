@@ -20,10 +20,13 @@ exports[`PYTHON_PYDANTIC_PRESET should render pydantic for class 1`] = `
 
     return serialized_self
 
+  def list_keys(data):
+    return list(data.keys() if isinstance(data, dict) else data.model_dump().keys())
+
   @model_validator(mode='before')
   @classmethod
   def unwrap_additional_properties(cls, data):
-    json_properties = list(data.keys())
+    json_properties = cls.list_keys(data)
     known_object_properties = ['prop', 'additional_properties']
     unknown_object_properties = [element for element in json_properties if element not in known_object_properties]
     # Ignore attempts that validate regular models, only when unknown input is used we add unwrap extensions
@@ -32,7 +35,7 @@ exports[`PYTHON_PYDANTIC_PRESET should render pydantic for class 1`] = `
   
     known_json_properties = ['prop', 'additionalProperties']
     additional_properties = {}
-    for obj_key in list(data.keys()):
+    for obj_key in cls.list_keys(data):
       if not known_json_properties.__contains__(obj_key):
         additional_properties[obj_key] = data.pop(obj_key, None)
     data['additionalProperties'] = additional_properties
@@ -59,10 +62,13 @@ Array [
 
     return serialized_self
 
+  def list_keys(data):
+    return list(data.keys() if isinstance(data, dict) else data.model_dump().keys())
+
   @model_validator(mode='before')
   @classmethod
   def unwrap_additional_properties(cls, data):
-    json_properties = list(data.keys())
+    json_properties = cls.list_keys(data)
     known_object_properties = ['union_test', 'additional_properties']
     unknown_object_properties = [element for element in json_properties if element not in known_object_properties]
     # Ignore attempts that validate regular models, only when unknown input is used we add unwrap extensions
@@ -71,7 +77,7 @@ Array [
   
     known_json_properties = ['unionTest', 'additionalProperties']
     additional_properties = {}
-    for obj_key in list(data.keys()):
+    for obj_key in cls.list_keys(data):
       if not known_json_properties.__contains__(obj_key):
         additional_properties[obj_key] = data.pop(obj_key, None)
     data['additionalProperties'] = additional_properties
@@ -94,10 +100,13 @@ Array [
 
     return serialized_self
 
+  def list_keys(data):
+    return list(data.keys() if isinstance(data, dict) else data.model_dump().keys())
+
   @model_validator(mode='before')
   @classmethod
   def unwrap_additional_properties(cls, data):
-    json_properties = list(data.keys())
+    json_properties = cls.list_keys(data)
     known_object_properties = ['test_prop1', 'additional_properties']
     unknown_object_properties = [element for element in json_properties if element not in known_object_properties]
     # Ignore attempts that validate regular models, only when unknown input is used we add unwrap extensions
@@ -106,7 +115,7 @@ Array [
   
     known_json_properties = ['testProp1', 'additionalProperties']
     additional_properties = {}
-    for obj_key in list(data.keys()):
+    for obj_key in cls.list_keys(data):
       if not known_json_properties.__contains__(obj_key):
         additional_properties[obj_key] = data.pop(obj_key, None)
     data['additionalProperties'] = additional_properties
@@ -129,10 +138,13 @@ Array [
 
     return serialized_self
 
+  def list_keys(data):
+    return list(data.keys() if isinstance(data, dict) else data.model_dump().keys())
+
   @model_validator(mode='before')
   @classmethod
   def unwrap_additional_properties(cls, data):
-    json_properties = list(data.keys())
+    json_properties = cls.list_keys(data)
     known_object_properties = ['test_prop2', 'additional_properties']
     unknown_object_properties = [element for element in json_properties if element not in known_object_properties]
     # Ignore attempts that validate regular models, only when unknown input is used we add unwrap extensions
@@ -141,7 +153,7 @@ Array [
   
     known_json_properties = ['testProp2', 'additionalProperties']
     additional_properties = {}
-    for obj_key in list(data.keys()):
+    for obj_key in cls.list_keys(data):
       if not known_json_properties.__contains__(obj_key):
         additional_properties[obj_key] = data.pop(obj_key, None)
     data['additionalProperties'] = additional_properties

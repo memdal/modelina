@@ -98,10 +98,13 @@ def custom_serializer(self, handler):
 
   return serialized_self
 
+def list_keys(data):
+  return list(data.keys() if isinstance(data, dict) else data.model_dump().keys())
+
 @model_validator(mode='before')
 @classmethod
 def unwrap_${dictionaryModel?.propertyName}(cls, data):
-  json_properties = list(data.keys())
+  json_properties = cls.list_keys(data)
   known_object_properties = [${allProperties
     .map((value) => `'${value}'`)
     .join(', ')}]
@@ -114,7 +117,7 @@ def unwrap_${dictionaryModel?.propertyName}(cls, data):
     .map((value) => `'${value.unconstrainedPropertyName}'`)
     .join(', ')}]
   ${dictionaryModel?.propertyName} = {}
-  for obj_key in list(data.keys()):
+  for obj_key in cls.list_keys(data):
     if not known_json_properties.__contains__(obj_key):
       ${dictionaryModel?.propertyName}[obj_key] = data.pop(obj_key, None)
   data['${dictionaryModel?.unconstrainedPropertyName}'] = ${dictionaryModel?.propertyName}
